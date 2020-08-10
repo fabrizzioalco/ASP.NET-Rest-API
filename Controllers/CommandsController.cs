@@ -59,11 +59,6 @@ namespace Commander.Controller
             var commanderReadDto = _mapper.Map<CommandReadDtos>(commandModel);
             return Ok(commanderReadDto);
         }
-        [HttpPut]
-        public ActionResult<CommandReadDtos> UpdateCommand(CommandCreateDto commandUpdateDto)
-        {
-            return null;
-        }
         //profiile we define how is going to be mapped
 
         //PUT api/commands/{id}
