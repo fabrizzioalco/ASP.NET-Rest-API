@@ -9,6 +9,8 @@ namespace Commander.Data
     {
         private readonly CommanderContext _context;
 
+
+    //Why i did this?
         public SqlCommanderRepo(CommanderContext context)
         {
             _context = context;
@@ -36,6 +38,11 @@ namespace Commander.Data
         public bool SaveChanges()
         {
             return(_context.SaveChanges() >= 0);
+        }
+
+        public void UpdateCommands(Command cmd)
+        {
+            //Updating this.
         }
     }
 }

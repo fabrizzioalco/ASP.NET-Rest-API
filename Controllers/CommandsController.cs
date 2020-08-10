@@ -25,7 +25,7 @@ namespace Commander.Controller
         // private readonly MockCommanderRepo _repository =  new MockCommanderRepo();
         //GET api/commands
         [HttpGet]
-        //returnging CommandReadDtos wuold give me the objects that i need 
+        //returnging CommandReadDtos would give me the objects that i need 
         public ActionResult <IEnumerable<CommandReadDtos>> GetAllCommands()
         {
             var commandItems = _repository.GetAllCommands();
@@ -59,6 +59,29 @@ namespace Commander.Controller
             var commanderReadDto = _mapper.Map<CommandReadDtos>(commandModel);
             return Ok(commanderReadDto);
         }
+        [HttpPut]
+        public ActionResult<CommandReadDtos> UpdateCommand(CommandCreateDto commandUpdateDto)
+        {
+            return null;
+        }
         //profiile we define how is going to be mapped
+
+        //PUT api/commands/{id}
+        [HttpPut("{id}")]
+        public ActionResult UpdateCommand(int id, CommandUpdateDto commandUpdateDto)
+        {
+            var commandModelFromRepo = _repository.GetCommandById(id);
+
+            if (commandModelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(commandUpdateDto, commandModelFromRepo);
+            _repository.UpdateCommands(commandModelFromRepo);
+            _repository.SaveChanges();
+            
+            return NoContent();
+        }
     }
 }

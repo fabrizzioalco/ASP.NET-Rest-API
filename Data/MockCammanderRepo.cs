@@ -30,6 +30,11 @@ namespace Commander.Data
         {
             throw new System.NotImplementedException();
         }
+
+        public void UpdateCommands(Command cmd)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
 }

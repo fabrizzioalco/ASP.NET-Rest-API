@@ -29,6 +29,7 @@ namespace Commander
         public void ConfigureServices(IServiceCollection services)
         {
 
+            //Here we connect to the database
             services.AddDbContext<CommanderContext>(opt => opt.UseSqlServer
             (Configuration.GetConnectionString("CommanderConnection")));
             services.AddControllers();
@@ -51,7 +52,7 @@ namespace Commander
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+ 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
