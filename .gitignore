@@ -1,4 +1,4 @@
 appsettings.json
 bin/
-dock1er-compose.yaml
+docker-compose.yaml
 obj/

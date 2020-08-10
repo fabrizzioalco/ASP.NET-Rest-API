@@ -106,5 +106,20 @@ namespace Commander.Controller
             
         }
 
+        [HttpDelete("{id}")]
+        public ActionResult DeleteCommand(int id)
+        {
+            //check if exists in the db using the repository interface
+            var commandModelFromRepo = _repository.GetCommandById(id);
+            if(commandModelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _repository.DelteCommand(commandModelFromRepo);
+            _repository.SaveChanges();
+            return NoContent();
+        }
+
     }
 }
