@@ -3,6 +3,7 @@ using AutoMapper;
 using Commander.Data;
 using Commander.Dtos;
 using Commander.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Commander.Controller
@@ -78,5 +79,32 @@ namespace Commander.Controller
             
             return NoContent();
         }
+
+        //PATHC api/commands/{id}
+        [HttpPatch("{id}")]
+        public ActionResult PartialCommandUpdate(int id, JsonPatchDocument<CommandUpdateDto> patchdoc)
+        {
+            var commandModelFromRepo = _repository.GetCommandById(id);
+            if(commandModelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            var commandToPathc = _mapper.Map<CommandUpdateDto>(commandModelFromRepo);
+            //Model|State checks the validation
+            patchdoc.ApplyTo(commandToPathc, ModelState);
+
+            if(!TryValidateModel(commandToPathc))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(commandToPathc, commandModelFromRepo);
+            _repository.SaveChanges();
+
+            return NoContent();
+            
+        }
+
     }
 }
